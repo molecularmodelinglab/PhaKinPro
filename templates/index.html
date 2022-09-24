@@ -29,7 +29,8 @@
     <main id="content">
         <h1 class="display-4" id="title">ZINC Rx Property Calculator</h1>
         <p>This is an online web portal to estimate various drug properties described in PAPER LINK</p>
-        <p>Please note that Solubility and LogP are estimated properties, thus can be inaccurate. Please take this into account when prioritizing compounds</p>
+        <p>Single SMILES will show results below. Similarity maps are generated with RDKit: Red means contributes to inactive class, green means contributes to active</p>
+        <p>Using similarity maps will increase the runtime significantly please be patient</p>
         <div id="forms-wrapper">
             <div class="search-wrapper">
                 <div class="form-wrapper">
@@ -41,7 +42,7 @@
                             Get Properties
                         </button>
                     </form>
-                    <p>When uploading a SMILES file make sure smiles are newline seperated (ei a csv with one column and each row is a SMILES). Uploaded files will auto-populate the text area, wait to generate csv until you see them in the box. CSV will be a row for each SMILES with columns for all active properties values, the total score and the score breakdown for each property. Score breakdown is ; seperated ei 1;0;2;1;0 means the first property was 1, second was 0...
+                    <p>When uploading a SMILES file make sure smiles are newline seperated (ei a csv with one column and each row is a SMILES). Uploaded files will auto-populate the text area, wait to generate csv until you see them in the box. Large numbers of SMILES and models wil take a long time to process, be patient. It is recommend that is number of SMILES * number of model is > 100 to instead use the standalone calculator LINK TO GITHUB instead of this webserver</p>
                     <form id="multi-smiles-form" class="smiles-form">
                         <textarea class="form-control" id="multi-smiles" cols="30" rows="5" placeholder="Enter multiple SMILES strings as a comma separated list and generate a .csv file."></textarea>
                         <input class="form-control" type="file" id="smiles-file">
@@ -74,6 +75,7 @@
                     <p>Enabled Models</p>
                 </form>
             </div>
+            <div class="hidden loading-wrapper" style="text-align: center;"><img src="https://i.stack.imgur.com/MnyxU.gif" alt="LOADING..."></div>
             <div class="hidden molecule-wrapper">
                 <h4 class="display-4">Results</h4>
                 <div id="molecule_smile_string"></div>

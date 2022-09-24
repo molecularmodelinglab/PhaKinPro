@@ -18,15 +18,30 @@ body {
 
 #forms-wrapper {
     display: grid;
-    grid-template-columns: 1.25fr 1.25fr 1fr;
-    grid-gap: 0.5em 0.5em;
+    grid-template-columns: 2.5fr 1fr;
+    grid-gap: 0.5em;
     grid-template-areas: 
-        "search search options"
-        "molecule molecule options"
+        "search options"
+        "load options"
+        "molecule options"
 }
 
 .hidden {
     display: none !important;
+}
+
+.molecule-wrapper {
+    grid-area: molecule;
+    padding: 1em;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.167);
+    border-radius: 5px;
+}
+
+.loading-gif {
+    grid-area: molecule;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* MOLECULES PANEL */
@@ -143,11 +158,16 @@ body {
 @media only screen and (max-width: 900px) {
     #forms-wrapper {
         grid-template-areas: 
-            "search search search"
-            "options options options"
-            "molecule molecule molecule"
+            "search search"
+            "options options"
+            "load load"
+            "molecule molecule"
     }
     #search-options {
         max-height: 0;
     }
   }
+
+
+/* LOADING SCREEN */
+
