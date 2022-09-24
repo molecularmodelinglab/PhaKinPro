@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molecular Properties</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom -->
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/error.js" type="module"></script>
+    <script src="/static/molecule-card.js" type="module"></script>
+    <script src="/static/options.js" type="module" defer></script>
+    <script src="/static/single-smiles.js" type="module" defer></script>
+    <script src="/static/smiles-csv_v3.js" type="module" defer></script>
+    <!-- Argon Design System -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/argon-design-system-free@1.2.0/assets/css/nucleo-icons.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link type="text/css" href="https://cdn.jsdelivr.net/npm/argon-design-system-free@1.2.0/assets/css/argon-design-system.min.css" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js" integrity="sha512-X41/A5OSxoi5uqtS6Krhqz8QyyD8E/ZbN7B4IaBSgqPLRbWVuXJXr9UwOujstj71SoVxh5vxgy7kmtd17xrJRw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+    <script src="https://unpkg.com/@popperjs/core@2" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/argon-design-system-free@1.2.0/assets/js/argon-design-system.min.js" defer></script>
+</head>
+<body>
+    <main id="content">
+        <h1 class="display-4" id="title">ZINC Rx Property Calculator</h1>
+        <p>This is an online web portal to estimate various drug properties described in PAPER LINK</p>
+        <p>Please note that Solubility and LogP are estimated properties, thus can be inaccurate. Please take this into account when prioritizing compounds</p>
+        <div id="forms-wrapper">
+            <div class="search-wrapper">
+                <div class="form-wrapper">
+                    <form id="single-smiles-form" class="smiles-form">
+                        <div class="input-group">
+                            <input class="form-control" type="text" id="smiles-input" placeholder="Enter SMILES" value="OCCc1c(C)[n+](cs1)Cc2cnc(C)nc2N">
+                        </div>
+                        <button class="btn btn-default" title="Get properties of molecule from SMILES string." type="submit">
+                            Get Properties
+                        </button>
+                    </form>
+                    <p>When uploading a SMILES file make sure smiles are newline seperated (ei a csv with one column and each row is a SMILES). Uploaded files will auto-populate the text area, wait to generate csv until you see them in the box. CSV will be a row for each SMILES with columns for all active properties values, the total score and the score breakdown for each property. Score breakdown is ; seperated ei 1;0;2;1;0 means the first property was 1, second was 0...
+                    <form id="multi-smiles-form" class="smiles-form">
+                        <textarea class="form-control" id="multi-smiles" cols="30" rows="5" placeholder="Enter multiple SMILES strings as a comma separated list and generate a .csv file."></textarea>
+                        <input class="form-control" type="file" id="smiles-file">
+                        <h5>Sorry, csv generation will not work on safari, use chrome, edge or firefox</h5>
+                        <button class="btn btn-default" title="Generate a CSV file containing molecular properties from multiple SMILES strings" type="submit">
+                            <i class="ni ni-cloud-download-95"></i>Generate CSV
+                        </button>
+                    </form>
+                </div>
+                <div class="error-wrapper hidden">
+                    <small id="error-message"></small>
+                </div>
+            </div>
+            <div class="options-wrapper">
+                <div class="options-icons">
+                    <i id="options-dropdown-open" class="options-dropdown ni ni-bold-down"></i>
+                    <i id="options-dropdown-close" class="hidden options-dropdown ni ni-bold-up"></i>
+                    <i class="ni ni-settings-gear-65"></i>
+                </div>
+                <form id="search-options">
+                    <p>Model Options</p>
+                    <div class="option-item custom-control custom-checkbox mb-3">
+                        <input class="custom-control-input" type="checkbox" id="calculate_ad" name="calculate_ad" checked>
+                        <label for="calculate_ad" class="custom-control-label">Calculate AD</label>
+                    </div>
+                    <div class="option-item custom-control custom-checkbox mb-3">
+                        <input class="custom-control-input" type="checkbox" id="make_prop_img" name="make_prop_img">
+                        <label for="make_prop_img" class="custom-control-label">Display Similarity Maps</label>
+                    </div>
+                    <p>Enabled Models</p>
+                </form>
+            </div>
+            <div class="hidden molecule-wrapper">
+                <h4 class="display-4">Results</h4>
+                <div id="molecule_smile_string"></div>
+                <div id="molecule-svg"></div>
+                <div class="molecule-properties" id="dummy-preds"></div>
+            </div>
+        </div>
+        <div>
+              <p style="color: #a5a3a3">Developed by James Wellnitz and Marielle Rath</p>
+              <p style="color: #a5a3a3">Supported by the CBI training Program 5T32GM135122-2</p>
+              <p style="color: #a5a3a3">&copy; 2022, all rights reserved</p>
+        </div>
+    </main>
+</body>
+</html>

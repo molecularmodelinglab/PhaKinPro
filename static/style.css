@@ -1,0 +1,153 @@
+/* GENERAL */
+
+body {
+    padding: 1.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#content {
+    overflow: visible;  
+}
+
+#title {
+    margin-bottom: 1em;
+}
+
+#forms-wrapper {
+    display: grid;
+    grid-template-columns: 1.25fr 1.25fr 1fr;
+    grid-gap: 0.5em 0.5em;
+    grid-template-areas: 
+        "search search options"
+        "molecule molecule options"
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* MOLECULES PANEL */
+
+.molecule-wrapper {
+    grid-area: molecule;
+    padding: 1em; 
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.167);
+    border-radius: 5px;
+}
+
+.molecule-properties {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.molecule-properties span {
+    font-weight: 500;
+}
+
+.search-wrapper {
+    grid-area: search;
+}
+
+/* OPTIONS PANEL */
+
+.options-wrapper {
+    grid-area: options;
+    padding: 1em;
+    background-color: var(--secondary);
+    border-radius: 5px;
+}
+
+.options-wrapper .options-icons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.options-wrapper small {
+    margin-bottom: 0.3em;
+}
+
+.options-dropdown {
+    cursor: pointer;
+}
+
+.option-item {
+    width: 100%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    font-size: 0.8em;
+}
+
+.option-item label {
+    font-size: small;
+}
+
+.option-item input[type="number"] {
+    width: 4em;
+    margin-bottom: 1em;
+}
+
+#search-options {
+    overflow: hidden;
+    margin-top: 0;
+    transition: all 0.15s ease-out;
+}
+
+#search-options.search-options-open {
+    margin-top: 0.5em;
+    max-height: 1000px;
+    transition: all 0.25s ease-in;
+}
+
+/* SMILES FORM */
+
+.smiles-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.smiles-form textarea {
+    font-size: 0.8em;
+}
+
+.smiles-form button {
+    margin-top: 0.5em;
+}
+
+.smiles-form button i {
+    margin-right: 0.5em;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.error-wrapper {
+    margin-top: 1em;
+    color: #e74c3c;
+}
+
+/* MEDIA QUERIES */
+
+@media only screen and (min-width: 900px) {
+    .options-dropdown {
+        visibility: hidden;
+    }
+    #content {
+        width: 70%;
+    }
+  }
+
+@media only screen and (max-width: 900px) {
+    #forms-wrapper {
+        grid-template-areas: 
+            "search search search"
+            "options options options"
+            "molecule molecule molecule"
+    }
+    #search-options {
+        max-height: 0;
+    }
+  }
