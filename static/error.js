@@ -9,8 +9,12 @@ function displayClientError(err) {
 }
 
 function displayServerError(err) {
-    if (err.status == 400) {
+    if (err.status === "400") {
         errorMessage.innerHTML = 'Invalid SMILES Input!';
+        smilesInput.classList.add('is-invalid');
+        smilesForm.classList.add('has-danger');
+    } else if (err.status === "300") {
+        errorMessage.innerHTML = 'To many models and SMILES!';
         smilesInput.classList.add('is-invalid');
         smilesForm.classList.add('has-danger');
     } else {
@@ -28,6 +32,7 @@ export function clearErrorMessage() {
     }
 }
 
+// add the ability to turn off the loader gif when error is thrown
 export function displayError(err) {
     errorWrapper.classList.remove('hidden');
     if (err instanceof Response) {
