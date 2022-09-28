@@ -40,7 +40,7 @@ def smiles_csv():
     num_models = sum([val for key, val in options.items() if key not in ["calculate_ad", "make_prop_img"]])
 
     if len(smiles) * num_models > 100:
-        return abort(300)
+        return abort(413)
 
     csv = get_csv_from_smiles(request.json.get('smiles'), request.json.get('options'))
 

@@ -2,24 +2,32 @@ const errorMessage = document.getElementById('error-message');
 const errorWrapper = document.querySelector('.error-wrapper');
 const smilesInput = document.getElementById('smiles-input');
 const smilesForm = document.getElementById('single-smiles-form');
+const loadingWrapper = document.querySelector('.loading-wrapper');
 
 function displayClientError(err) {
     errorMessage.innerHTML = `<b>Unexpected Client Error</b> ${err}`;
     throw err;
 }
 
+export function hideLoadingWrapper() {
+    if (!loadingWrapper.className.includes('hidden')) {
+        loadingWrapper.classList.add('hidden');
+    }
+}
+
 function displayServerError(err) {
-    if (err.status === "400") {
+    if (err.status === 400) {
         errorMessage.innerHTML = 'Invalid SMILES Input!';
         smilesInput.classList.add('is-invalid');
         smilesForm.classList.add('has-danger');
-    } else if (err.status === "300") {
-        errorMessage.innerHTML = 'To many models and SMILES!';
+    } else if (err.status === 413) {
+        errorMessage.innerHTML = 'To many models and SMILES use the local version instead';
         smilesInput.classList.add('is-invalid');
         smilesForm.classList.add('has-danger');
     } else {
         errorMessage.innerHTML = `<b>Unexpected Server Error</b> (${err.status}): ${err.statusText}`;
     }
+    hideLoadingWrapper();
 }
 
 export function clearErrorMessage() {
