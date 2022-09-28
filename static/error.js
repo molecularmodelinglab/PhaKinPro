@@ -21,7 +21,7 @@ function displayServerError(err) {
         smilesInput.classList.add('is-invalid');
         smilesForm.classList.add('has-danger');
     } else if (err.status === 413) {
-        errorMessage.innerHTML = 'To many models and SMILES use the local version instead';
+        errorMessage.innerHTML = `To many models and SMILES use the <a href="https://github.com/molecularmodelinglab/ZincRx">local version</a> instead`;
         smilesInput.classList.add('is-invalid');
         smilesForm.classList.add('has-danger');
     } else {

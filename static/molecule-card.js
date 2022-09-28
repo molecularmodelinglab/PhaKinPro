@@ -30,7 +30,7 @@ export function displayMoleculeCard(moleculeData) {
     moleculeSMILES.innerHTML = moleculeData.SMILES;
     moleculeSVG.innerHTML = moleculeData.svg;
 
-    for (const [modelName, classification, confidence, ad, prob_svg, color] of moleculeData.pred_data) {
+    for (const [modelName, classification, confidence, ad, prob_svg, color, prob_meaning] of moleculeData.pred_data) {
 
         let wrapper = document.createElement('div');
         wrapper.className = 'option-item custom-control custom-checkbox mb-3';
@@ -46,6 +46,9 @@ export function displayMoleculeCard(moleculeData) {
         }
 
         if (prob_svg !== "") {
+            let prob_meaning_text = document.createElement('p')
+            prob_meaning_text.innerHTML = `${prob_meaning}`
+            information.append(prob_meaning_text)
             let prob_svg_element = document.createElement('div');
             prob_svg_element.innerHTML = `<div>${prob_svg}</div>`
             information.append(prob_svg_element)

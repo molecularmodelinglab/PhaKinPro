@@ -21,8 +21,8 @@ body {
     grid-template-columns: 2.5fr 1fr;
     grid-gap: 0.5em;
     grid-template-areas: 
-        "search options"
-        "load options"
+        "ssearch options"
+        "msearch options"
         "molecule options"
 }
 
@@ -63,8 +63,13 @@ body {
     font-weight: 500;
 }
 
-.search-wrapper {
-    grid-area: search;
+.single-search-wrapper {
+    grid-area: ssearch;
+
+}
+
+.multi-search-wrapper {
+    grid-area: msearch;
 }
 
 /* OPTIONS PANEL */
@@ -72,9 +77,16 @@ body {
 .options-wrapper {
     grid-area: options;
     padding: 1em;
+    border-radius: 5px;
+
+}
+
+.options-sidebar {
     background-color: var(--secondary);
+    padding: 1.5em;
     border-radius: 5px;
 }
+
 
 .options-wrapper .options-icons {
     display: flex;
@@ -157,10 +169,10 @@ body {
 
 @media only screen and (max-width: 900px) {
     #forms-wrapper {
-        grid-template-areas: 
-            "search search"
+        grid-template-areas:
+            "ssearch ssearch"
             "options options"
-            "load load"
+            "msearch msearch"
             "molecule molecule"
     }
     #search-options {

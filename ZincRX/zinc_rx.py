@@ -157,14 +157,17 @@ def multiclass_ranking(ordered_preds):
 
 
 def main(smiles, calculate_ad=True, make_prop_img=False, **kwargs):
+
+    print(smiles)
+
     def default(key, d):
         if key in d.keys():
             return d[key]
         else:
             return False
 
-    models = [f for f in glob.glob("./ZincRX/models/*.pgz")]
-    models_data = [f for f in glob.glob("./ZincRX/models/*.pbz2")]
+    models = sorted([f for f in glob.glob("./ZincRX/models/*.pgz")], key=lambda x: x.split("_")[1])
+    models_data = sorted([f for f in glob.glob("./ZincRX/models/*.pbz2")], key=lambda x: x.split("_")[1])
 
     values = {}
 
@@ -192,9 +195,13 @@ def main(smiles, calculate_ad=True, make_prop_img=False, **kwargs):
             if new_pred == 0:
                 processed_results.append([key, "Inconsistent result: no prediction", "Very unconfident", "NA", ""])
             else:
-                processed_results.append([key, CLASSIFICATION_DICT[key][new_pred], val[new_pred-1][1], val[new_pred-1][2], val[new_pred-1][3]])
+                # this is because of how the hierarchical model works
+                if new_pred in [1, 2]:
+                    p = 0
+                else:
+                    p = new_pred - 2
+                processed_results.append([key, CLASSIFICATION_DICT[key][new_pred], val[p][1], val[p][2], val[p][3]])
         else:
-            print(key, val)
             processed_results.append([key, CLASSIFICATION_DICT[key][val[0][0]], val[0][1], val[0][2], val[0][3]])
 
     return processed_results
