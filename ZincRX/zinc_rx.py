@@ -91,7 +91,7 @@ CLASSIFICATION_DICT = {
         1: "Microsomal intrinsic clearance >= 12 uL/min/mg"
     },
     'Oral Bioavailability': {
-        1: "Less and 0.5 F",
+        1: "Less than 0.5 F",
         2: "Between 0.5 and 0.8 F",
         3: "Above 0.8 F"
     }
