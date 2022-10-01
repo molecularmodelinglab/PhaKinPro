@@ -33,34 +33,37 @@
 <body data-new-gr-c-s-check-loaded="8.904.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="8.904.0">
     <main id="content">
         <h1 class="display-4" id="title">PK-Cast: Pharmacokinetic Property Calculator</h1>
-        <p>This is an online web portal to estimate various drug properties described in PAPER LINK</p>
-        <p>Single SMILES will show results below. Similarity maps are generated with RDKit: Red means contributes to inactive class, green means contributes to active</p>
-        <p>Using similarity maps will increase the runtime significantly please be patient</p>
+        <p>This is an online web portal to estimate various drug properties described in PAPER LINK. To use, enter SMILE in the box below, or draw a compound and hit load SMILES, then click "Get Properties". Results will appear below. By default all models for all endpoints will be run. You can choose to turn off certain endpoints in the options sidebar. Fragment contribution maps are generated with RDKit. To turn on the maps, check the "Display contribution maps" in the options sidebar. It defaults to off because the maps will increase the runtime significantly, so if using please be patient</p>
         <div id="forms-wrapper">
-            <div class="single-search-wrapper">
-                <div class="form-wrapper">
-                    <form id="single-smiles-form" class="smiles-form">
-                        <div class="input-group">
-                            <input class="form-control" type="text" id="smiles-input" placeholder="Enter SMILES" value="OCCc1c(C)[n+](cs1)Cc2cnc(C)nc2N">
-                        </div>
-                        <button class="btn btn-default" title="Get properties of molecule from SMILES string." type="submit">
-                            Get Properties
-                        </button>
-                    </form>
+            <div class="search-wrapper">
+                <div class="single-search-wrapper">
+                    <div class="form-wrapper">
+                        <form id="single-smiles-form" class="smiles-form">
+                            <div class="input-group">
+                                <input class="form-control" type="text" id="smiles-input" placeholder="Enter SMILES" value="OCCc1c(C)[n+](cs1)Cc2cnc(C)nc2N">
+                            </div>
+                            <button class="btn btn-default" title="Get properties of molecule from SMILES string." type="submit">
+                                Get Properties
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="multi-search-wrapper">
-                <p>When uploading a SMILES file make sure smiles are newline seperated (ei a csv with one column and each row is a SMILES). Uploaded files will auto-populate the text area, wait to generate csv until you see them in the box. Large numbers of SMILES and models wil take a long time to process, be patient. It is recommend that is number of SMILES * number of model is > 100 to instead use the <a href="https://github.com/molecularmodelinglab/ZincRx">local standalone calculator</a> instead of this webserver</p>
-                <form id="multi-smiles-form" class="smiles-form">
-                    <textarea class="form-control" id="multi-smiles" cols="30" rows="5" placeholder="Enter multiple SMILES strings as a comma separated list and generate a .csv file."></textarea>
-                    <input class="form-control" type="file" id="smiles-file">
-                    <h5>Sorry, csv generation will not work on safari, use chrome, edge or firefox</h5>
-                    <button class="btn btn-default" title="Generate a CSV file containing molecular properties from multiple SMILES strings" type="submit">
-                        <i class="ni ni-cloud-download-95"></i>Generate CSV
-                    </button>
-                </form>
-                <div class="error-wrapper hidden">
-                    <small id="error-message"></small>
+                <hr class="style1">
+                <div class="multi-search-wrapper">
+                    <form id="multi-smiles-form" class="smiles-form">
+                        <p>You can also generate a CSV of the results by entering compounds below, seperated by commas or new lines. fragment contribution maps will not be generated for CSV. Large numbers of SMILES and models wil take a long time to process, be patient. It is recommended that is number of SMILES * number of model is > 100 to instead use the <a href="https://github.com/molecularmodelinglab/ZincRx">local standalone calculator</a> instead of this webserver.</p>
+                        <textarea class="form-control" id="multi-smiles" cols="30" rows="5" placeholder="Enter multiple SMILES strings as a comma or new line separated list and generate a .csv file."></textarea>
+                        <input class="form-control" type="file" id="smiles-file">
+                        <p>When uploading a SMILES file make sure smiles are newline seperated (ei a csv with one column and each row is a SMILES). Uploaded files will auto-populate the text area, wait to generate csv until you see them in the box.</p>
+                        <div class="hidden loading-wrapper-csv" style="text-align: center;"><img src="https://i.stack.imgur.com/MnyxU.gif" alt="LOADING..."></div>
+                        <button class="btn btn-default" title="Generate a CSV file containing molecular properties from multiple SMILES strings" type="submit">
+                            <i class="ni ni-cloud-download-95"></i>Generate CSV
+                        </button>
+                        <h5>Sorry, csv generation will not work on safari, use chrome, edge or firefox</h5>
+                    </form>
+                    <div class="error-wrapper hidden">
+                        <small id="error-message"></small>
+                    </div>
                 </div>
             </div>
             <div class="options-wrapper">
@@ -89,7 +92,7 @@
                         </div>
                         <div class="option-item custom-control custom-checkbox mb-3">
                             <input class="custom-control-input" type="checkbox" id="make_prop_img" name="make_prop_img">
-                            <label for="make_prop_img" class="custom-control-label">Display Similarity Maps</label>
+                            <label for="make_prop_img" class="custom-control-label">Display Fragment Contribution Maps</label>
                         </div>
                         <p>Enabled Models</p>
                     </form>
@@ -104,8 +107,8 @@
             </div>
         </div>
         <div>
-              <p style="color: #a5a3a3">Developed by James Wellnitz and Marielle Rath of the MML @ UNC</p>
-              <p style="color: #a5a3a3">Supported by the National Institute of General Medical Sciences of the National Institutes of Health under Award Number T32GM135122. The content is solely the responsibility of the authors and does not necessarily represent the official views of National Institutes of Health</p>
+            <p style="color: #a5a3a3">Developed by James Wellnitz and Marielle Rath of the <a href="http://34.171.188.194/">MML @ UNC</a></p>
+              <p style="color: #a5a3a3">Supported by the National Institute of General Medical Sciences of the National Institutes of Health under Award Number T32GM135122 and National Institute of Allergy and Infectious Diseases of the National Institutes of Health under Award Number U19AI171292. The content is solely the responsibility of the authors and does not necessarily represent the official views of National Institutes of Health</p>
               <p style="color: #a5a3a3">&copy; 2022, all rights reserved</p>
         </div>
     </main>

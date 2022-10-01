@@ -21,8 +21,8 @@ body {
     grid-template-columns: 2.5fr 1fr;
     grid-gap: 0.5em;
     grid-template-areas: 
-        "ssearch options"
-        "msearch options"
+        "search options"
+        "search options"
         "molecule options"
 }
 
@@ -63,13 +63,8 @@ body {
     font-weight: 500;
 }
 
-.single-search-wrapper {
-    grid-area: ssearch;
-
-}
-
-.multi-search-wrapper {
-    grid-area: msearch;
+.search-wrapper {
+    grid-area: search;
 }
 
 /* OPTIONS PANEL */

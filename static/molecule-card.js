@@ -54,6 +54,10 @@ export function displayMoleculeCard(moleculeData) {
             information.append(prob_svg_element)
         }
 
+        let line_break = document.createElement('hr')
+        line_break.classList.add("style1")
+        information.append(line_break)
+
         wrapper.append(information);
         moleculeProperties.append(wrapper);
     }

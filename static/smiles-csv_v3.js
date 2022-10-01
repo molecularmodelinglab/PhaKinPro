@@ -4,11 +4,26 @@ import { displayError, clearErrorMessage } from "./error.js";
 const form = document.getElementById('multi-smiles-form')
 const textArea = document.getElementById('multi-smiles')
 const smilesFile = document.getElementById('smiles-file')
+const loadingWrapper = document.querySelector('.loading-wrapper-csv');
 
 function downloadCSV(blob) {
     let url = window.URL.createObjectURL(blob);
     window.location.assign(url);
     URL.revokeObjectURL(url);
+    hideLoadingWrapper();
+}
+
+export function hideLoadingWrapper() {
+    if (!loadingWrapper.className.includes('hidden')) {
+        loadingWrapper.classList.add('hidden');
+    }
+}
+
+
+export function showLoadingWrapper() {
+    if (loadingWrapper.className.includes('hidden')) {
+        loadingWrapper.classList.remove('hidden');
+    }
 }
 
 smilesFile.addEventListener('change', () => {
@@ -33,6 +48,9 @@ smilesFile.addEventListener('change', () => {
 form.onsubmit = (event) => {
     event.preventDefault();
     clearErrorMessage();
+
+    showLoadingWrapper();
+    loadingWrapper.scrollIntoView({behavior:"smooth"});
 
     fetch('/smiles-csv', {
         method: 'POST',

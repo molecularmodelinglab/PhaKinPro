@@ -23,8 +23,8 @@ MODEL_DICT = {
     'Hepatic Stability': ['Dataset_01B_hepatic-stability_15min_imbalanced-morgan_RF.pgz',
                           'Dataset_01C_hepatic-stability_30min_imbalanced-morgan_RF.pgz',
                           'Dataset_01D_hepatic-stability_60min_imbalanced-morgan_RF.pgz'],
-    'Microsomal Half-life Sub-cellular 30min': ['Dataset_02A_microsomal-half-life-subcellular_imbalanced-morgan_RF.pgz'],
-    'Microsomal Half-life Tissue 30min': ['Dataset_02B_microsomal-half-life_30-min_binary_unbalanced_morgan_RF.pgz'],
+    'Microsomal Half-life Sub-cellular': ['Dataset_02A_microsomal-half-life-subcellular_imbalanced-morgan_RF.pgz'],
+    'Microsomal Half-life Tissue': ['Dataset_02B_microsomal-half-life_30-min_binary_unbalanced_morgan_RF.pgz'],
     'Renal Clearance': ['dataset_03_renal-clearance_0.1-threshold_balanced-morgan_RF.pgz',
                         'dataset_03_renal-clearance_0.5-threshold_imbalanced-morgan_RF.pgz',
                         'dataset_03_renal-clearance_1.0-threshold_balanced-morgan_RF.pgz'],
@@ -50,11 +50,11 @@ CLASSIFICATION_DICT = {
         3: "Hepatic stability <= 50% between 30 and 60 minutes",
         4: "Hepatic stability > 50% at 60 minutes"
     },
-    'Microsomal Half-life Sub-cellular 30min': {
+    'Microsomal Half-life Sub-cellular': {
         0: "Sub-cellular Hepatic Half-life > 30 minutes",
         1: "Sub-cellular Hepatic Half-life <= 30 minutes"
     },
-    'Microsomal Half-life Tissue 30min': {
+    'Microsomal Half-life Tissue': {
         0: "Tissue Hepatic Half-life > 30 minutes",
         1: "Tissue Hepatic Half-life <= 30 minutes"
     },
@@ -77,8 +77,8 @@ CLASSIFICATION_DICT = {
         1: "Does permeate Caco-2"
     },
     'Plasma Protein Binding': {
-        0: "Plasma protein binding",
-        1: "Weak/non plasma protein binding"
+        0: "Plasma protein binder",
+        1: "Weak/non plasma protein binder"
     },
     'Plasma Half-life': {
         1: "Half-life below 1 hour",
