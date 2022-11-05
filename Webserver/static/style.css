@@ -16,6 +16,12 @@ body {
     margin-bottom: 1em;
 }
 
+.web-header-content img {
+    float: left;
+    width:200px;
+    height: 100%
+}
+
 #forms-wrapper {
     display: grid;
     grid-template-columns: 2.5fr 1fr;

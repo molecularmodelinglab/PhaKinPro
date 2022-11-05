@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PK-Cast</title>
+    <title>PhaKinPro</title>
+    <link rel="shortcut icon" href="./static/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom -->
     <link rel="stylesheet" href="/static/style.css">
@@ -32,9 +33,15 @@
 </head>
 <body data-new-gr-c-s-check-loaded="8.904.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="8.904.0">
     <main id="content">
-        <h1 class="display-4" id="title">PK-Cast: Pharmacokinetic Property Calculator</h1>
-        <p>This is an online web portal to estimate various drug properties described in PAPER LINK. To use, enter SMILE in the box below, or draw a compound and hit load SMILES, then click "Get Properties". Results will appear below. By default all models for all endpoints will be run. You can choose to turn off certain endpoints in the options sidebar. Fragment contribution maps are generated with RDKit. To turn on the maps, check the "Display contribution maps" in the options sidebar. It defaults to off because the maps will increase the runtime significantly, so if using please be patient</p>
-        <div id="forms-wrapper">
+        <div id="web-header-content">
+            <img src="./static/logo_main_large_text2.png" alt="" style="float: left; height: 100px; padding: 5px;">
+            <h1 class="display-4" id="title" style="vertical-align: middle; line-height: 100px;">PhaKinPro: PHArmacoKINetic PROperty calculator</h1>
+        </div>
+        <div style="position: relative">
+            <p>This is an online web portal to estimate various drug properties described in PAPER LINK. To use, enter SMILE in the box below, or draw a compound and hit load SMILES, then click "Get Properties". Results will appear below. By default all models for all endpoints will be run. You can choose to turn off certain endpoints in the options sidebar. Fragment contribution maps are generated with RDKit. To turn on the maps, check the "Display contribution maps" in the options sidebar. It defaults to off because the maps will increase the runtime significantly, so if using please be patient</p>
+            <p>Please cite [PAPER REF GOES HERE]. Models and code for this webserver can be found <a href="https://github.com/jimmyjbling/PhaKinPro">here</a>.</p>
+        </div>
+            <div id="forms-wrapper">
             <div class="search-wrapper">
                 <div class="single-search-wrapper">
                     <div class="form-wrapper">
@@ -51,7 +58,7 @@
                 <hr class="style1">
                 <div class="multi-search-wrapper">
                     <form id="multi-smiles-form" class="smiles-form">
-                        <p>You can also generate a CSV of the results by entering compounds below, seperated by commas or new lines. fragment contribution maps will not be generated for CSV. Large numbers of SMILES and models wil take a long time to process, be patient. It is recommended that is number of SMILES * number of model is > 100 to instead use the <a href="https://github.com/molecularmodelinglab/ZincRx">local standalone calculator</a> instead of this webserver.</p>
+                        <p>You can also generate a CSV of the results by entering compounds below, seperated by commas or new lines. fragment contribution maps will not be generated for CSV. Large numbers of SMILES and models wil take a long time to process, be patient. It is recommended that is number of SMILES * number of model is > 100 to instead use the <a href="https://github.com/jimmyjbling/PhaKinPro">local standalone calculator</a> instead of this webserver.</p>
                         <textarea class="form-control" id="multi-smiles" cols="30" rows="5" placeholder="Enter multiple SMILES strings as a comma or new line separated list and generate a .csv file."></textarea>
                         <input class="form-control" type="file" id="smiles-file">
                         <p>When uploading a SMILES file make sure smiles are newline seperated (ei a csv with one column and each row is a SMILES). Uploaded files will auto-populate the text area, wait to generate csv until you see them in the box.</p>
