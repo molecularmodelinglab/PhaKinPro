@@ -159,6 +159,7 @@ def multiclass_ranking(ordered_preds):
 def main(smiles, calculate_ad=True, make_prop_img=False, **kwargs):
 
     print(smiles)
+    print(os.getcwd())
 
     def default(key, d):
         if key in d.keys():
@@ -166,8 +167,8 @@ def main(smiles, calculate_ad=True, make_prop_img=False, **kwargs):
         else:
             return False
 
-    models = sorted([f for f in glob.glob("./PhaKinPro/models/*.pgz")], key=lambda x: x.split("_")[1])
-    models_data = sorted([f for f in glob.glob("./PhaKinPro/models/*.pbz2")], key=lambda x: x.split("_")[1])
+    models = sorted([f for f in glob.glob(os.path.join(os.path.dirname(os.path.realpath(__file__)), "./PhaKinPro/models/*.pgz"))], key=lambda x: x.split("_")[1])
+    models_data = sorted([f for f in glob.glob(os.path.join(os.path.dirname(os.path.realpath(__file__)),"./PhaKinPro/models/*.pbz2"))], key=lambda x: x.split("_")[1])
 
     values = {}
 
