@@ -1,0 +1,7 @@
+numpy
+matplotlib
+rdkit
+scipy
+tqdm
+flask
+scikit-learn
