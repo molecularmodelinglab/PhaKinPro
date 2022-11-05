@@ -1,5 +1,5 @@
 from rdkit.Chem import MolFromSmiles, Draw
-from ZincRX.zinc_rx import main
+from PhaKinPro.phakinpro import main
 
 # to set the coloring display of the outcomes on the website
 COLORS = {

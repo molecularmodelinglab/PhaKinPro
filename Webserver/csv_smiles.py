@@ -1,7 +1,7 @@
 import csv
 from io import StringIO
 from rdkit.Chem import MolFromSmiles
-from ZincRX.zinc_rx import main
+from PhaKinPro.phakinpro import main
 
 
 def get_csv_from_smiles(smiles_list, options):

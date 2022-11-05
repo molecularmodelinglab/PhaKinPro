@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, abort, Response, jsonify
 from smiles import get_molecule_data_from_smiles
-from ZincRX.zinc_rx import MODEL_DICT
+from PhaKinPro.phakinpro import MODEL_DICT
 from csv_smiles import get_csv_from_smiles
 
 app = Flask(__name__)

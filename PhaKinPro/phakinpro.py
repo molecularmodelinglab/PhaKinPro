@@ -166,8 +166,8 @@ def main(smiles, calculate_ad=True, make_prop_img=False, **kwargs):
         else:
             return False
 
-    models = sorted([f for f in glob.glob("./ZincRX/models/*.pgz")], key=lambda x: x.split("_")[1])
-    models_data = sorted([f for f in glob.glob("./ZincRX/models/*.pbz2")], key=lambda x: x.split("_")[1])
+    models = sorted([f for f in glob.glob("./PhaKinPro/models/*.pgz")], key=lambda x: x.split("_")[1])
+    models_data = sorted([f for f in glob.glob("./PhaKinPro/models/*.pbz2")], key=lambda x: x.split("_")[1])
 
     values = {}
 
@@ -205,3 +205,58 @@ def main(smiles, calculate_ad=True, make_prop_img=False, **kwargs):
             processed_results.append([key, CLASSIFICATION_DICT[key][val[0][0]], val[0][1], val[0][2], val[0][3]])
 
     return processed_results
+
+
+def write_csv_file(smiles_list, calculate_ad=False):
+    headers = list(MODEL_DICT.keys())
+
+    if calculate_ad:
+        headers = headers + [_ + "_AD" for _ in headers]
+
+    string_file = StringIO()
+    writer = csv.DictWriter(string_file, fieldnames=['SMILES', *headers])
+    writer.writeheader()
+
+    for smiles in tqdm(smiles_list):
+        molecule = MolFromSmiles(smiles)
+
+        row = {'SMILES': smiles}
+
+        if molecule is None:
+            row['SMILES'] = f"(invalid){smiles}"
+            writer.writerow(row)
+            continue
+
+        data = main(smiles, calculate_ad=calculate_ad, **MODEL_DICT)
+
+        for model_name, pred, pred_proba, ad, _ in data:
+            try:
+                pred_proba = float(pred_proba[:-1]) / 100  # covert back to 0-1 float
+                row[
+                    model_name] = pred_proba if pred == 1 else 1 - pred_proba  # this is to make sure its proba for class 1
+            except ValueError:
+                row[model_name] = "No prediction"  # if pred_proba is string skip
+            if calculate_ad:
+                row[model_name + "_AD"] = ad
+
+        writer.writerow(row)
+
+    return string_file.getvalue()
+
+
+if __name__ == "__main__":
+    import argparse
+    import csv
+    from io import StringIO
+    from rdkit.Chem import MolFromSmiles
+    from tqdm import tqdm
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--infile", type=str, required=True,
+                        help="location to csv of SMILES")
+    parser.add_argument("--outfile", type=str, default=os.path.join(os.getcwd(), "phakin_output.csv"),
+                        help="location and file name for output")
+    parser.add_argument("--smiles_col", type=str, default="SMILES",
+                        help="column name containing SMILES of interest"),
+    parser.add_argument("--ad", action="store_true",
+                        help="calculate the AD")
