@@ -15,3 +15,6 @@ After downloading, `PhaKinPro/phakinpro.py` can be called from the command line 
 
 # Webserver interface
 This repository also contains the code to run a local webserver (or host your own). You can start the server by running `qunicorn wsqi:app` (or using the devolpment flask server by setting the `FLASK_APP` variable: `$env:FLASK_APP = "main"` on windows or `export FLASK_ENV=main` on unix). From that access 127.0.0.1:5000 to view the local server
+
+Thanks to JSME for a free and easy to use molecule editor for webpages
+Bienfait, B., Ertl, P. JSME: a free molecule editor in JavaScript. J Cheminform 5, 24 (2013). https://doi.org/10.1186/1758-2946-5-24
