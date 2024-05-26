@@ -1,6 +1,6 @@
 # PhaKinPro
 
-PHArmacoKINetic PROperty calculator: Used to predict varies pharmacokinetic properties using QSAR models. If you use please cite \[INSERT CITATION HERE]. There is a [webserver](http://34.170.18.221/) that runs these models, but for large numbers of compounds, running locally using this code is much more effective
+PHArmacoKINetic PROperty calculator: Used to predict varies pharmacokinetic properties using QSAR models. If you use please cite [our paper](https://pubs.acs.org/doi/10.1021/acs.jmedchem.3c02446). There is a [webserver](http://34.170.18.221/) that runs these models, but for large numbers of compounds, running locally using this code is much more effective
 
 # Requierments
 Install the requirments from the requirements.txt file. Additionally, if you want to run the webserver, you need to install flask and qunicorn
