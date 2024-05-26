@@ -158,8 +158,8 @@ def multiclass_ranking(ordered_preds):
 
 def main(smiles, calculate_ad=True, make_prop_img=False, **kwargs):
 
-    print(smiles)
-    print(os.getcwd())
+    # print(smiles)
+    # print(os.getcwd())
 
     def default(key, d):
         if key in d.keys():
@@ -167,8 +167,8 @@ def main(smiles, calculate_ad=True, make_prop_img=False, **kwargs):
         else:
             return False
 
-    models = sorted([f for f in glob.glob(os.path.join(os.path.dirname(os.path.realpath(__file__)), "./PhaKinPro/models/*.pgz"))], key=lambda x: x.split("_")[1])
-    models_data = sorted([f for f in glob.glob(os.path.join(os.path.dirname(os.path.realpath(__file__)),"./PhaKinPro/models/*.pbz2"))], key=lambda x: x.split("_")[1])
+    models = sorted([f for f in glob.glob(os.path.join(os.path.dirname(os.path.realpath(__file__)), "./models/*.pgz"))], key=lambda x: x.split("_")[1])
+    models_data = sorted([f for f in glob.glob(os.path.join(os.path.dirname(os.path.realpath(__file__)),"./models/*.pbz2"))], key=lambda x: x.split("_")[1])
 
     values = {}
 
@@ -209,10 +209,12 @@ def main(smiles, calculate_ad=True, make_prop_img=False, **kwargs):
 
 
 def write_csv_file(smiles_list, calculate_ad=False):
-    headers = list(MODEL_DICT.keys())
-
-    if calculate_ad:
-        headers = headers + [_ + "_AD" for _ in headers]
+    headers = []
+    for _key in MODEL_DICT.keys():
+        headers.append(_key)
+        headers.append(_key+"_proba")
+        if calculate_ad:
+            headers.append(_key+"_AD")
 
     string_file = StringIO()
     writer = csv.DictWriter(string_file, fieldnames=['SMILES', *headers])
@@ -231,10 +233,11 @@ def write_csv_file(smiles_list, calculate_ad=False):
         data = main(smiles, calculate_ad=calculate_ad, **MODEL_DICT)
 
         for model_name, pred, pred_proba, ad, _ in data:
+            print(pred, pred_proba, ad)
             try:
                 pred_proba = float(pred_proba[:-1]) / 100  # covert back to 0-1 float
-                row[
-                    model_name] = pred_proba if pred == 1 else 1 - pred_proba  # this is to make sure its proba for class 1
+                row[model_name] = pred
+                row[model_name + "_proba"] = pred_proba if pred == 1 else 1 - pred_proba  # this is to make sure its proba for class 1
             except ValueError:
                 row[model_name] = "No prediction"  # if pred_proba is string skip
             if calculate_ad:

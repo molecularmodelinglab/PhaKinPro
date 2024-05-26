@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PhaKinPro</title>
-    <link rel="shortcut icon" href="./static/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom -->
     <link rel="stylesheet" href="/static/style.css">
@@ -23,6 +22,29 @@
 
     <script type="text/javascript" language="javascript" src="static/jsme/jsme.nocache.js"></script>
 
+        <script>
+     //this function will be called after the JavaScriptApplet code has been loaded.
+        function jsmeOnLoad() {
+            jsmeApplet = new JSApplet.JSME("JME", "380px", "340px");
+            jsmeApplet.setCallBack("AfterStructureModified", showSmiles);
+        }
+        function showSmiles(jsmeEvent) {
+            console.log(jsmeEvent.action)
+             const smileText = document.getElementById('smiles-input')
+             smileText.value = jsmeEvent.src.smiles();
+        }
+
+    </script>
+    <script>
+        function checkThings(checkVal) {
+            let checkboxes = document.getElementsByClassName('custom-control-input')
+            let i = 0, n = checkboxes.length;
+            for(; i<n; i++) {
+                checkboxes[i].checked = checkVal;
+            }
+        }
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js" integrity="sha512-X41/A5OSxoi5uqtS6Krhqz8QyyD8E/ZbN7B4IaBSgqPLRbWVuXJXr9UwOujstj71SoVxh5vxgy7kmtd17xrJRw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
     <script src="https://unpkg.com/@popperjs/core@2" defer></script>
@@ -39,10 +61,16 @@
         </div>
         <div style="position: relative">
             <p>This is an online web portal to estimate various drug properties described in PAPER LINK. To use, enter SMILE in the box below, or draw a compound and hit load SMILES, then click "Get Properties". Results will appear below. By default all models for all endpoints will be run. You can choose to turn off certain endpoints in the options sidebar. Fragment contribution maps are generated with RDKit. To turn on the maps, check the "Display contribution maps" in the options sidebar. It defaults to off because the maps will increase the runtime significantly, so if using please be patient</p>
-            <p>Please cite [PAPER REF GOES HERE]. Models and code for this webserver can be found <a href="https://github.com/jimmyjbling/PhaKinPro">here</a>.</p>
         </div>
             <div id="forms-wrapper">
             <div class="search-wrapper">
+                            <p>Please cite <a href="">our paper</a>. </p>
+                <div><ol><li><b>Pharmacokinetics Profiler (PhaKinPro): Model Development, Validation, and Implementation as a Web Tool for Triaging Compounds with Undesired Pharmacokinetics Profiles</b>
+Marielle Rath, James Wellnitz, et.
+                    al.,
+Journal of Medicinal Chemistry 2024 67 (8), 6508-6518
+DOI: 10.1021/acs.jmedchem.3c02446</li></ol></div>
+            <p>Models and code for this webserver can be found <a href="https://github.com/jimmyjbling/PhaKinPro">here</a>.</p>
                 <div class="single-search-wrapper">
                     <div class="form-wrapper">
                         <form id="single-smiles-form" class="smiles-form">
@@ -62,7 +90,7 @@
                         <textarea class="form-control" id="multi-smiles" cols="30" rows="5" placeholder="Enter multiple SMILES strings as a comma or new line separated list and generate a .csv file."></textarea>
                         <input class="form-control" type="file" id="smiles-file">
                         <p>When uploading a SMILES file make sure smiles are newline seperated (ei a csv with one column and each row is a SMILES). Uploaded files will auto-populate the text area, wait to generate csv until you see them in the box.</p>
-                        <div class="hidden loading-wrapper-csv" style="text-align: center;"><img src="https://i.stack.imgur.com/MnyxU.gif" alt="LOADING..."></div>
+                        <div class="hidden loading-wrapper-csv" style="text-align: center;"><img src="./static/loading_image.gif" alt="LOADING..."></div>
                         <button class="btn btn-default" title="Generate a CSV file containing molecular properties from multiple SMILES strings" type="submit">
                             <i class="ni ni-cloud-download-95"></i>Generate CSV
                         </button>
@@ -74,17 +102,7 @@
                 </div>
             </div>
             <div class="options-wrapper">
-                <div class="jme-wrapper">
-                    <form id="draw-smiles-form" class="draw-form">
-                        <div code="JME.class" name="JME" archive="JME.jar" width="360" height="315" id="JME">You have to enable JavaScript in your browser to use JSME! </div>
-                        <div class="load_smiles_button">
-                            <button class="btn btn-default" title="Get SMILES From JSME" type="submit">
-                                Load SMILES
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div><p></p></div>
+                <div id="JME"></div>
                 <div class="options-sidebar">
                     <div class="options-icons">
                         <i id="options-dropdown-open" class="options-dropdown ni ni-bold-down"></i>
@@ -105,7 +123,7 @@
                     </form>
                 </div>
             </div>
-            <div class="hidden loading-wrapper" style="text-align: center;"><img src="https://i.stack.imgur.com/MnyxU.gif" alt="LOADING..."></div>
+            <div class="hidden loading-wrapper" style="text-align: center;"><img src="./static/loading_image.gif" alt="LOADING..."></div>
             <div class="hidden molecule-wrapper">
                 <h4 class="display-4">Results</h4>
                 <div id="molecule_smile_string"></div>

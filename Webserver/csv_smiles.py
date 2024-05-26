@@ -10,10 +10,14 @@ def get_csv_from_smiles(smiles_list, options):
 
     options["make_prop_img"] = False  # do not need to create images for csv
 
-    headers = [key for key, val in options.items() if ((key not in ["calculate_ad", "make_prop_img"]) and val)]
+    _keys = [key for key, val in options.items() if ((key not in ["calculate_ad", "make_prop_img"]) and val)]
 
-    if options["calculate_ad"]:
-        headers = headers + [_+"_AD" for _ in headers]
+    headers = []
+    for _key in _keys:
+        headers.append(_key)
+        headers.append(_key+"_proba")
+        if options["calculate_ad"]:
+            headers.append(_key+"_AD")
 
     string_file = StringIO()
     writer = csv.DictWriter(string_file, fieldnames=['SMILES', *headers])
@@ -34,9 +38,11 @@ def get_csv_from_smiles(smiles_list, options):
         for model_name, pred, pred_proba, ad, _ in data:
             try:
                 pred_proba = float(pred_proba[:-1]) / 100  # covert back to 0-1 float
-                row[model_name] = pred_proba if pred == 1 else 1 - pred_proba  # this is to make sure its proba for class 1
+                row[model_name+"_proba"] = pred_proba
+                row[model_name] = pred
             except ValueError:
                 row[model_name] = "No prediction"  # if pred_proba is string skip
+                row[model_name+"_proba"] = -1
             if options["calculate_ad"]:
                 row[model_name + "_AD"] = ad
 
