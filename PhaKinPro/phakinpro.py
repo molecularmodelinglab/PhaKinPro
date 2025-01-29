@@ -13,6 +13,8 @@ import _pickle as cPickle
 import io
 import matplotlib.pyplot as plt
 
+from cpy_model import PhaKinProCYP
+
 # god hates me so in my version of python I cannot supress these damn user warning so I do this nuclear option instead
 import warnings
 def warn(*args, **kwargs):
@@ -37,8 +39,13 @@ MODEL_DICT = {
                          'Dataset_08_plasma_half_life_6_hr_imbalanced-morgan_RF.pgz'],
     'Microsomal Intrinsic Clearance': ['Dataset_09_microsomal-intrinsic-clearance_12uL-min-mg-threshold-imbalanced-morgan_RF.pgz'],
     'Oral Bioavailability': ['dataset_10_oral_bioavailability_0.5_threshold_imbalanced-morgan_RF.pgz',
-                             'dataset_10_oral_bioavailability_0.8_balanced-morgan_RF.pgz']
+                             'dataset_10_oral_bioavailability_0.8_balanced-morgan_RF.pgz'],
+    "CYP3A4": PhaKinProCYP(cyp_type="3A4", endpoint),
+    "CYP2D6": PhaKinProCYP(cyp_type="2D6"),
+    "CYP2C9": PhaKinProCYP(cyp_type="2C9")
 }
+
+
 
 # lol I'm just like screw code readability sorry
 MODEL_DICT_INVERT = {v: key for key, val in MODEL_DICT.items() for v in val}
@@ -94,7 +101,19 @@ CLASSIFICATION_DICT = {
         1: "Less than 0.5 F",
         2: "Between 0.5 and 0.8 F",
         3: "Above 0.8 F"
-    }
+    },
+    "CYP3A4 Inhibition": {
+        0: "No inhibition",
+        1: "Inhibition",
+        2: "Inconsistent result: no prediction"
+    },
+    "CYP3A4 Substrate": {
+        0: "Not a substrate",
+        1: "Substrate",
+        2: "Inconsistent result: no prediction"
+    },
+    "CYP2D6": PhaKinProCYP(cyp_type="2D6"),
+    "CYP2C9": PhaKinProCYP(cyp_type="2C9")
 }
 
 
